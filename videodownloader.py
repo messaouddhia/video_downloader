@@ -4,7 +4,10 @@ from time import sleep
 import os
 
 global str
-userurl = (input("Enter a youtube video URL : "))
+try:
+    userurl = (input("Enter a youtube video URL : "))
+except:
+    print("Enter a valid youtube URL!")
 q = str(input("Which quality you want ?  360p,480p,720p,1080p,2K,4K: ")).lower()
 yt = YouTube(userurl)
 print ("Title of the video : ",yt.title)
@@ -12,13 +15,16 @@ print ("Title of the video : ",yt.title)
 
 def hd2k():
     print("Downloading a 2K video...")
-    v = yt.streams.filter(res="1440p", adaptive = True).first().download(filename = "2K")
-    print("Video downloaded")
-    yt.streams.filter(mime_type="audio")
-    a = yt.streams.get_audio_only()
-    print("Downloading audio")
-    a.download(filename = "audio2K")
-    print("audio downloaded")
+    try:
+        v = yt.streams.filter(res="1440p", adaptive = True).first().download(filename = "2K")
+        print("Video downloaded")
+        yt.streams.filter(mime_type="audio")
+        a = yt.streams.get_audio_only()
+        print("Downloading audio")
+        a.download(filename = "audio2K")
+        print("audio downloaded")
+    except:
+        print("Cannot download " + "'" + yt.title + "'")
     sleep(3)
     input_video = ffmpeg.input("2K.webm")
     input_audio = ffmpeg.input('audio2K.mp4')
@@ -28,14 +34,17 @@ def hd2k():
     os.remove("audio2K.mp4")
 
 def hd4k():
-    print("Downloading a 4K video...")
-    v = yt.streams.filter(res="2160p", adaptive = True).first().download(filename = "4K")
-    print("Video downloaded")
-    yt.streams.filter(mime_type="audio")
-    a = yt.streams.get_audio_only()
-    print("Downloading audio")
-    a.download(filename = "audio4K")
-    print("audio downloaded")
+    try:
+        print("Downloading a 4K video...")
+        v = yt.streams.filter(res="2160p", adaptive = True).first().download(filename = "4K")
+        print("Video downloaded")
+        yt.streams.filter(mime_type="audio")
+        a = yt.streams.get_audio_only()
+        print("Downloading audio")
+        a.download(filename = "audio4K")
+        print("audio downloaded")
+    except:
+        print("Cannot download " + "'" + yt.title + "'")
     sleep(3)
     input_video = ffmpeg.input("4K.webm")
     input_audio = ffmpeg.input('audio4K.mp4')
@@ -46,14 +55,17 @@ def hd4k():
 
 
 def hd1080p():
-    print("Downloading a HD 1080p video...")
-    v = yt.streams.filter(mime_type="video/mp4", res="1080p", adaptive = True).first().download(filename = "HD1080P")
-    print("Video downloaded")
-    yt.streams.filter(mime_type="audio")
-    a = yt.streams.get_audio_only()
-    print("Downloading audio")
-    a.download(filename = "audio")
-    print("audio downloaded")
+    try:
+        print("Downloading a HD 1080p video...")
+        v = yt.streams.filter(mime_type="video/mp4", res="1080p", adaptive = True).first().download(filename = "HD1080P")
+        print("Video downloaded")
+        yt.streams.filter(mime_type="audio")
+        a = yt.streams.get_audio_only()
+        print("Downloading audio")
+        a.download(filename = "audio")
+        print("audio downloaded")
+    except:
+        print("Cannot download " + "'" + yt.title + "'")
     sleep(3)
     input_video = ffmpeg.input("HD1080P.mp4")
     input_audio = ffmpeg.input('audio.mp4')
@@ -64,21 +76,28 @@ def hd1080p():
 
 
 def hd720p():
-    print("Downloading a 720p video")
-    yt.streams.filter(res="720p", progressive=True).first().download()
-    print("Finished.")
-
+    try:
+        print("Downloading a 720p video")
+        yt.streams.filter(res="720p", progressive=True).first().download()
+        print("Finished.")
+    except:
+        print("Cannot download " + "'" + yt.title + "'")
 
 def l480p():
-    print("Downloading a 480p video.....")
-    yt.streams.filter(res="480p", progressive=True).first().download()
-    print("Finished.")
+    try:
+        print("Downloading a 480p video.....")
+        yt.streams.filter(res="480p", progressive=True).first().download()
+        print("Finished.")
+    except:
+        print("Cannot download " + "'" + yt.title + "'")
 
 def l360p():
-    print("Downloading...")
-    yt.streams.filter(res="360p", progressive=True).first().download() 
-    print("Finished.")
-    
+    try:
+        print("Downloading...")
+        yt.streams.filter(res="360p", progressive=True).first().download() 
+        print("Finished.")
+    except:
+        print("Cannot download " + "'" + yt.title + "'")        
 
 if q == "1080" or q == "1080p":
     hd1080p()
